@@ -24,9 +24,6 @@
     "react-test-renderer": "16.8.3"
   },
   "jest": {
-    "preset": "react-native",
-    "snapshotSerializers": [
-      "./node_modules/jest-serializer-enzyme"
-    ]
+    "preset": "react-native"
   }
 }

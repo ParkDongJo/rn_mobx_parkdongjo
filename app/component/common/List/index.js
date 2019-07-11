@@ -3,6 +3,8 @@ import {
   View,
   Text,
 } from 'react-native';
+import { observer, inject } from 'mobx-react';
+
 
 @inject(stores => ({
     trucks: stores.root.list
