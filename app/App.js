@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { StatusBar, SafeAreaView, } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { Provider } from 'mobx-react';
 
@@ -25,9 +25,14 @@ const rootStore = new RootStore();
 export default class App extends React.Component {
   render() {
     console.log("rootStore = ",rootStore);
+
     return (
       <Provider root={rootStore}>
-        <AppContainer />
+        <SafeAreaView style={{flex: 1}}>
+          <StatusBar barStyle="dark-content" translucent = {true} />
+
+          <AppContainer />
+        </SafeAreaView>
       </Provider>
     )
   }
