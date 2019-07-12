@@ -6,6 +6,8 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
+  AsyncStorage,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import styles from './styles';
@@ -24,13 +26,39 @@ class Login extends React.Component {
     constructor(props) {
       super(props);
 
-      this.state = {
-        isLoading: false,
-        text: 'Test',
+      state = {
+        loading: false,
       };
     }
 
-    render() {
+    componentDidMount() {
+      AsyncStorage.getItem('userToken')
+      .then((token) => {
+
+        if (!!token) {
+          this.props.navigation.navigate('Main');
+        }
+      })
+    }
+
+    componentWillUnmount() {
+      this.props.authStore.reset();
+    }
+
+    onClickLoginBtn = async () => {
+      const { authStore, navigation } = this.props;
+      let resp = await authStore.login();
+
+      if (resp.success) {
+        authStore.registerToken(resp.token);
+        navigation.navigate('Main');
+
+      } else {
+        Alert.alert('ERROR - ', resp.errMsg);
+      }
+    }
+
+    render = () => {
       const { authStore } = this.props;
 
       return (
@@ -47,16 +75,19 @@ class Login extends React.Component {
               </View>
               <TextInput
                 style={styles.input}
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
+                onChangeText={(id) => authStore.setId(id)}
+                autoCapitalize = 'none'
+                value={authStore.id}
               />
               <View style={styles.label}>
                 <Text>Password</Text>
               </View>
               <TextInput
                 style={styles.input}
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
+                onChangeText={(pwd) => authStore.setPwd(pwd)}
+                value={authStore.pwd}
+                autoCapitalize = 'none'
+                secureTextEntry={true}
               />
               <View>
 
@@ -66,7 +97,7 @@ class Login extends React.Component {
             <View style={styles.btnView}>
               <TouchableOpacity style={[styles.defBtn, styles.loginBtn]}>
                 <Button
-                  onPress={() => {}}
+                  onPress={this.onClickLoginBtn.bind(this)}
                   title="로그인"
                   color="#841584"
                 />
@@ -82,7 +113,7 @@ class Login extends React.Component {
           </View>{/* 버튼영역 end */}
 
         </View>
-      );
+      )
     }
 }
 

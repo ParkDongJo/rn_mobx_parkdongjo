@@ -4,7 +4,6 @@ import { AsyncStorage, Alert, Platform } from 'react-native'
 import Global from '../global/constants'
 
 export default class AuthStore {
-    @observable loading = false;
     @observable registerFlag = false;
     @observable auth = {
         id: '',
@@ -36,41 +35,46 @@ export default class AuthStore {
         this.registerFlage = flag;
     }
 
-    @computed isValid = () => {
+    @computed get isValid() {
         return this.auth.id !== '' && this.auth.pwd !== '';
     }
 
     @action login = async () => {
-        if (isValid) {
-            const param = new FormData();
-            param.append("userId", this.auth.id);
-            param.append("password", this.auth.pwd);
-            param.append("deviceType", Platform.OS === 'ios'? 'ios' : 'android');
+        if (this.isValid) {
+            const param = {
+                "userId": this.auth.id,
+                "password": this.auth.pwd,
+                "deviceType": Platform.OS === 'ios'? 'ios' : 'android'
+            };
 
             try {
                 let response = await fetch(
-                  'https://mcricwiojwfb.cleancitynetworks.com/mobile/v1/auth',
+                  'https://mcricwiojwfb.cleancitynetworks.com/mobile/v1/auth/',
                   {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'multipart/form-data',
+                        'Content-Type': 'application/json',
                     },
-                    body: param
+                    body: JSON.stringify(param)
                 });
+
                 let respJson = await response.json();
 
-                if (respJson.statuscode == Global.STATUS_CODE.SUCCESS) {
-                    return {sucess: true, token: token};
+                if (response.ok) {
+                    return {success: true, token: respJson.data.token};
+
                 } else {
-                    throw respJosn.error;
+                    throw respJson.message;
                 }
 
-              } catch (error) {
-                console.error(error);
+            } catch (error) {
+                console.log(error);
                 return {sucess: false, errMsg: error};
                 // Alert.alert('ERROR - ', error);
-              }
+                // err log 기록
+                // error 모니터링 rollbar 검토중
+            }
 
         } else {
             Alert.alert('Not vaild your input value');
@@ -80,13 +84,13 @@ export default class AuthStore {
     @action reset = () => {
         this.setId('');
         this.setPwd('');
-        this.setToken('');
         this.setRegisterFlag(false);
     }
 
     @action logout = async () => {
         try {
             this.reset();
+            this.setToken('');
             await AsyncStorage.removeItem('userToken');
         } catch(err) {
             console.log(err);
