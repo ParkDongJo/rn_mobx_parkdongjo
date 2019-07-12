@@ -24,7 +24,6 @@ const rootStore = new RootStore();
 
 export default class App extends React.Component {
   render() {
-    console.log("rootStore = ",rootStore);
 
     return (
       <Provider root={rootStore}>

@@ -6,14 +6,14 @@ __스토리 1__<br>
 
 1. 시나리오<br>
 
-        given : 로그인한 기록
-        when : 있을 시
+        given : 로그인한 기억값
+        when : 있을 시 == true 일 시
         then : Main 화면으로 이동한다.
 
 2. 시나리오<br>
 
-        given : 로그인한 기록
-        when : 없을 시
+        given : 로그인한 기억값
+        when : 없을 시 == false 일 시 
         then : Login 화면을 보여준다.
 
 

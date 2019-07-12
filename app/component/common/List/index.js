@@ -7,7 +7,7 @@ import { observer, inject } from 'mobx-react';
 
 
 @inject(stores => ({
-    trucks: stores.root.list
+    trucks: stores.root.trucksStore
     })
 )
 @observer

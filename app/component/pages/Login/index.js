@@ -6,12 +6,16 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  AsyncStorage,
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import styles from './styles';
+import { observer, inject } from 'mobx-react';
 
 
+@inject(stores => ({
+    authStore: stores.root.authStore
+  })
+)
 class Login extends React.Component {
     static navigationOptions = {
       header: null
@@ -27,6 +31,8 @@ class Login extends React.Component {
     }
 
     render() {
+      const { authStore } = this.props;
+
       return (
         <View style={styles.container}>
           <View style={styles.content}>

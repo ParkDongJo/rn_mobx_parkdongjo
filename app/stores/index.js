@@ -1,5 +1,6 @@
 import TruckListStore from './trucks';
 import CounterStore from './counter';
+import AuthStore from './auth';
 
 // export const stores = {
 //     trucks: truckListStore,
@@ -8,7 +9,8 @@ import CounterStore from './counter';
 
 export default class RootStore {
     constructor() {
-        this.trucks = new TruckListStore(this)
-        this.counter = new CounterStore(this)
+        this.trucksStore = new TruckListStore(this);
+        this.counter = new CounterStore(this);
+        this.authStore = new AuthStore(this);
     }
 }
