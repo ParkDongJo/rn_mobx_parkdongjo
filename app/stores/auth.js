@@ -16,23 +16,23 @@ export default class AuthStore {
     }
 
     @action setId = (id) => {
-        if (typeof flag === 'string') return;
+        if (typeof id !== 'string') return;
         this.auth.id = id;
     }
 
     @action setPwd = (pwd) => {
-        if (typeof flag === 'string') return;
+        if (typeof pwd !== 'string') return;
         this.auth.pwd = pwd;
     }
 
     @action setToken = (token) => {
-        if (typeof flag === 'string') return;
+        if (typeof token !== 'string') return;
         this.auth.token = token;
     }
 
     @action setRegisterFlag = (flag) => {
-        if (typeof flag === 'boolean') return;
-        this.registerFlage = flag;
+        if (typeof flag !== 'boolean') return;
+        this.registerFlag = flag;
     }
 
     @computed get isValid() {
@@ -100,7 +100,8 @@ export default class AuthStore {
     }
 
     @action registerToken = async (token) => {
-        if (this.registerFlage) {
+
+        if (this.registerFlag) {
             try {
                 await AsyncStorage.setItem('userToken', token);
             } catch (err) {
