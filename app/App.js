@@ -5,14 +5,12 @@ import { Provider } from 'mobx-react';
 
 import Login from "./component/pages/Login";
 import Main from "./component/pages/Main";
-import Counter from "./component/pages/Counter";
 import RootStore from './stores';
 
 const AppNavigator = createStackNavigator(
   {
     Login: Login,
     Main: Main,
-    Counter: Counter,
   },
   {
     initialRouteName: "Login"
