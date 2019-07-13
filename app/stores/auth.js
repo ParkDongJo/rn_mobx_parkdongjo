@@ -4,7 +4,7 @@ import { AsyncStorage, Alert, Platform } from 'react-native'
 import Global from '../global/constants'
 
 export default class AuthStore {
-    @observable registerFlag = false;
+    @observable registerFlag = true;
     @observable auth = {
         id: '',
         pwd: '',

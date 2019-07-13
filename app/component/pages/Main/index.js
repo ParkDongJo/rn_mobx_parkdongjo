@@ -14,7 +14,8 @@ import Footer from '../../common/Footer';
 class Main extends React.Component {
     static navigationOptions = {
       title: 'Main Page',
-      //Sets Header text of Status Bar
+      header: null,
+      headerLeft: null
     };
   
     render() {
@@ -24,7 +25,6 @@ class Main extends React.Component {
 
           </View>
           <View style={styles.content}>
-            <Text>Main Screen</Text>
             <SearchView/>
             <ListView/>
           </View>
