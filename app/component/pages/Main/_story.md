@@ -6,13 +6,13 @@ __스토리 1__<br>
 
 1. 시나리오<br>
 
-        given : 토근값을
+        given : 토근값을 전달
         when : 차량 목록 조회 API 전송 후 응답이 성공 일 시
         then : truck 스토어에 배열값을 갱신시킨다.
 
 2. 시나리오<br>
 
-        given : 토큰값을
+        given : 토큰값을 전달
         when : 차량 목록 조회 API 전송 후 응답이 실패 일 시
         then : 에러메시지를 Alert로 띄워준다.k
 

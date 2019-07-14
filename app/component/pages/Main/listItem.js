@@ -7,12 +7,22 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import styles from './styles';
+import { observer, inject } from 'mobx-react';
 
 
-
+@inject(stores => ({
+    trucksStore: stores.root.trucksStore,
+    authStore: stores.root.authStore,
+  })
+)
 class ListItem extends React.Component {
     constructor() {
         super();
+    }
+
+    onClickFavorite = () => {
+        this.props.authStore.logout();
+        
     }
 
     render = () => {
@@ -23,7 +33,7 @@ class ListItem extends React.Component {
                 <Text style={styles.licenseNumTxt}>{item.licenseNumber}</Text>
                 <View style={styles.capacityView}>
                     <TouchableOpacity style={styles.favoriteBtn} 
-                                        onPress={()=> {}}>
+                                        onPress={this.onClickFavorite.bind(this)}>
                         <Icon name="ios-star-outline" size={20}/>
                     </TouchableOpacity>
                     <Text style={styles.capacityTxt}>

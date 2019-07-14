@@ -4,6 +4,7 @@ import {
   Text,
   Button,
   FlatList,
+  Alert
 } from 'react-native';
 import styles from './styles';
 
@@ -28,18 +29,40 @@ class Main extends React.Component {
   
     constructor() {
       super();
+
+      this.state = {
+        list: []
+      }
     }
 
-    render() {
+    async componentDidMount() {
+      const store = this.props.trucksStore;
+
+      let resp = await store.fetchTruckList();
+      if (resp.success) {
+        this.setState({'list': resp.data});
+      } else {
+        Alert.alert('ERROR - ', resp.errMsg);
+      }
+    }
+
+    onClickSeachBtn = (value) => {
+      let list = this.props.trucksStore.seachTruck(value);
+      this.setState({'list':list});
+    }
+
+    render = () => {
+      const { trucksStore } = this.props;
+
       return (
         <View style={styles.container}>
           <View style={styles.header}>
-            <SearchView/>
+            <SearchView onSearch={this.onClickSeachBtn.bind(this)}/>
           </View>
           <View style={styles.content}>
             <FlatList
                   style={{padding: 10}}
-                  data={this.props.trucksStore.list}  
+                  data={this.state.list}  
                   renderItem={({item}) => (
                     <ListItem
                       item={item}

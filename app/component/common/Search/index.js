@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import styles from './styles';
-import { observer, inject } from 'mobx-react';
 
 
 class SearchView extends React.Component {
@@ -15,7 +14,7 @@ class SearchView extends React.Component {
     constructor() {
       super();
 
-      state = {
+      this.state = {
         text: '',
       };
     }
@@ -24,16 +23,15 @@ class SearchView extends React.Component {
       return (
         <View style={styles.container}>
           <View style={styles.searchView}>
-            <TouchableOpacity style={styles.searchBtn}>
+            <TouchableOpacity style={styles.searchBtn}
+                              onPress={() => { this.props.onSearch(this.state.text) }}>
               <Icon name="ios-search" size={30}/>
             </TouchableOpacity>
             <TextInput
                   style={styles.input}
-                  onChangeText={() => {}}
-                  value={this.text}
+                  onChangeText={(text) => {this.setState({text})}}
+                  value={this.state.text}
                   placeholder = '차량 정보를 검색하세요'
-                  autoCapitalize = 'none'
-                  secureTextEntry={true}
                 />
           </View>
         </View>

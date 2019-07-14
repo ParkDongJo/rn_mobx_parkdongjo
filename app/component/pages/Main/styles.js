@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 1,  
-    elevation: 3
+    elevation: 3,
+    marginBottom: 8
   },
   descViewTxt: {
     fontSize: 14
