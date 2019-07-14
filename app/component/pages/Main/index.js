@@ -29,10 +29,6 @@ class Main extends React.Component {
   
     constructor() {
       super();
-
-      this.state = {
-        list: []
-      }
     }
 
     async componentDidMount() {
@@ -46,9 +42,9 @@ class Main extends React.Component {
       }
     }
 
-    onClickSeachBtn = (value) => {
-      let list = this.props.trucksStore.seachTruck(value);
-      this.setState({'list':list});
+    onClickSeachBtn = async (value) => {
+      await this.props.trucksStore.seachTruck(value);
+      this.setState({'list':this.props.trucksStore.list});
     }
 
     render = () => {
@@ -62,13 +58,11 @@ class Main extends React.Component {
           <View style={styles.content}>
             <FlatList
                   style={{padding: 10}}
-                  data={this.state.list}  
+                  data={trucksStore.list}  
                   renderItem={({item}) => (
-                    <ListItem
-                      item={item}
-                      onPress={() => {}} 
-                    />
+                    <ListItem item={item}/>
                   )}
+                  keyExtractor={(item, index) => index.toString()}
               />  
           </View>
           <Footer />

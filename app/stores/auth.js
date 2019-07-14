@@ -6,7 +6,7 @@ import { callApiByPost } from './../global/functions';
 
 
 export default class AuthStore {
-    @observable registerFlag = true;
+    @observable registerFlag = false;
     @observable auth = {
         id: '',
         pwd: '',
