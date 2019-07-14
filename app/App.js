@@ -5,15 +5,17 @@ import { Provider } from 'mobx-react';
 
 import Login from "./component/pages/Login";
 import Main from "./component/pages/Main";
+import Splash from "./component/common/Splash";
 import RootStore from './stores';
 
 const AppNavigator = createStackNavigator(
   {
     Login: Login,
     Main: Main,
+    Splash: Splash,
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "Splash"
   }
 );
 

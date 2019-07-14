@@ -29,20 +29,8 @@ class Login extends React.Component {
 
       this.state = {
         checked: true,
+        isLoading: true
       };
-    }
-
-    async componentDidMount() {
-      let auth = await AsyncStorage.getItem('auth')
-
-      if (!!auth) {
-        const { authStore } = this.props;
-        let user = JSON.parse(auth);
-
-        authStore.setId(user.id);
-        authStore.setPwd(user.pwd);
-        this.onClickLoginBtn();
-      }
     }
 
     componentWillUnmount() {
@@ -58,6 +46,7 @@ class Login extends React.Component {
       } else {
         Alert.alert('ERROR - ', resp.errMsg);
       }
+
     }
 
     onClickAutoLogin = () => {
