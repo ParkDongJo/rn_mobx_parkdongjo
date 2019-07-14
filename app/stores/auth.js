@@ -2,6 +2,8 @@
 import { observable, action, computed } from 'mobx';
 import { AsyncStorage, Alert, Platform } from 'react-native'
 import Global from '../global/constants'
+import { callApiByPost } from './../global/functions';
+
 
 export default class AuthStore {
     @observable registerFlag = true;
@@ -12,7 +14,7 @@ export default class AuthStore {
     };
 
     constructor(rootStore) {
-        this.rootStore = rootStore;
+        this.root = rootStore;
     }
 
     @action setId = (id) => {
@@ -47,37 +49,15 @@ export default class AuthStore {
                 "deviceType": Platform.OS === 'ios'? 'ios' : 'android'
             };
 
-            try {
-                let response = await fetch(
-                  'https://mcricwiojwfb.cleancitynetworks.com/mobile/v1/auth/',
-                  {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(param)
-                });
+            let resp = await callApiByPost({param: param, path: '/mobile/v1/auth/'})
 
-                let respJson = await response.json();
-
-                if (response.ok) {
-                    return {success: true, token: respJson.data.token};
-
-                } else {
-                    throw respJson.message;
-                }
-
-            } catch (error) {
-                console.log(error);
-                return {sucess: false, errMsg: error};
-                // Alert.alert('ERROR - ', error);
-                // err log 기록
-                // error 모니터링 rollbar 검토중
+            if (resp.success) {
+                await this.registerAutoLogin();
+                this.setToken(resp.token);
             }
-
+            return resp;
         } else {
-            Alert.alert('Not vaild your input value');
+            return {sucess: false, errMsg: 'Not vaild your input value'};
         }
     }
 
@@ -91,7 +71,7 @@ export default class AuthStore {
         try {
             this.reset();
             this.setToken('');
-            await AsyncStorage.removeItem('userToken');
+            await AsyncStorage.removeItem('auth');
         } catch(err) {
             console.log(err);
             // err log 기록
@@ -99,19 +79,18 @@ export default class AuthStore {
         }
     }
 
-    @action registerToken = async (token) => {
+    @action registerAutoLogin = async () => {
 
         if (this.registerFlag) {
             try {
-                await AsyncStorage.setItem('userToken', token);
+                await AsyncStorage.setItem('auth', 
+                                        JSON.stringify({id: this.auth.id, pwd: this.auth.pwd}));
             } catch (err) {
                 console.log(err);
                 // 에러 로그 기록
                 // error 모니터링 rollbar 검토중
             }
         }
-
-        this.setToken(token);
     }
 
 }

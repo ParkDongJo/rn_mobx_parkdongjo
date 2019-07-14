@@ -1,4 +1,5 @@
 module.exports = {
+  API_URL: 'https://mcricwiojwfb.cleancitynetworks.com',
   STATUS_CODE: {
     ERROR: 500, // 500
     NOT_FOUND: 404, // 404

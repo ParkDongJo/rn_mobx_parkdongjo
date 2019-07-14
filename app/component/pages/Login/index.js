@@ -31,14 +31,17 @@ class Login extends React.Component {
       };
     }
 
-    componentDidMount() {
-      AsyncStorage.getItem('userToken')
-      .then((token) => {
+    async componentDidMount() {
+      let auth = await AsyncStorage.getItem('auth')
 
-        if (!!token) {
-          this.props.navigation.navigate('Main');
-        }
-      })
+      if (!!auth) {
+        const { authStore } = this.props;
+        let user = JSON.parse(auth);
+
+        authStore.setId(user.id);
+        authStore.setPwd(user.pwd);
+        this.onClickLoginBtn();
+      }
     }
 
     componentWillUnmount() {
@@ -50,7 +53,6 @@ class Login extends React.Component {
       let resp = await authStore.login();
 
       if (resp.success) {
-        authStore.registerToken(resp.token);
         navigation.navigate('Main');
 
       } else {
