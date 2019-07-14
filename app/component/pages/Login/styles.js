@@ -28,13 +28,22 @@ const styles = StyleSheet.create({
     height: 30,
     marginTop: 2,
     marginBottom: 2,
+    marginLeft: 10,
+    marginRight: 10,
     flexDirection: 'column',
     justifyContent: "center"
   },
   input: {
     height: 50, 
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
     borderColor: 'gray', 
     borderWidth: 1
+  },
+  checkView: {
+    flexDirection: 'row', 
+    justifyContent: 'flex-start'
   },
 
   btnView: {

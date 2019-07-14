@@ -16,7 +16,7 @@ import { observer, inject } from 'mobx-react';
 
 
 @inject(stores => ({
-    trucksStore: stores.root.trucksStore
+    trucksStore: stores.root.trucksStore,
   })
 )
 @observer

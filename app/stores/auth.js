@@ -6,7 +6,7 @@ import { callApiByPost } from './../global/functions';
 
 
 export default class AuthStore {
-    @observable registerFlag = false;
+    @observable autoLoginFlag = true;
     @observable auth = {
         id: '',
         pwd: '',
@@ -32,9 +32,9 @@ export default class AuthStore {
         this.auth.token = token;
     }
 
-    @action setRegisterFlag = (flag) => {
+    @action setAutoLoginFlag = (flag) => {
         if (typeof flag !== 'boolean') return;
-        this.registerFlag = flag;
+        this.autoLoginFlag = flag;
     }
 
     @computed get isValid() {
@@ -64,7 +64,7 @@ export default class AuthStore {
     @action reset = () => {
         this.setId('');
         this.setPwd('');
-        this.setRegisterFlag(false);
+        this.setAutoLoginFlag(false);
     }
 
     @action logout = async () => {
@@ -81,7 +81,7 @@ export default class AuthStore {
 
     @action registerAutoLogin = async () => {
 
-        if (this.registerFlag) {
+        if (this.autoLoginFlag) {
             try {
                 await AsyncStorage.setItem('auth', 
                                         JSON.stringify({id: this.auth.id, pwd: this.auth.pwd}));
