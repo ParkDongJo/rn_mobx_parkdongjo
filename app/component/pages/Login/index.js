@@ -16,9 +16,20 @@ import { observer, inject } from 'mobx-react';
 
 
 @inject(stores => ({
-    authStore: stores.root.authStore
+  /* state */
+  id: stores.root.authStore.auth.id,
+  pwd: stores.root.authStore.auth.pwd,
+  autoLoginFlag: stores.root.authStore.autoLoginFlag,
+
+  /* action or computed */
+  setId: stores.root.authStore.setId,
+  setPwd: stores.root.authStore.setPwd,
+  setAutoLoginFlag: stores.root.authStore.setAutoLoginFlag,
+  login: stores.root.authStore.login,
+  reset: stores.root.authStore.reset
   })
 )
+@observer
 class Login extends React.Component {
     static navigationOptions = {
       header: null
@@ -26,10 +37,6 @@ class Login extends React.Component {
 
     constructor(props) {
       super(props);
-
-      this.state = {
-        checked: true,
-      };
     }
 
     componentWillUnmount() {
@@ -37,26 +44,24 @@ class Login extends React.Component {
     }
 
     onClickLoginBtn = async () => {
-      const { authStore, navigation } = this.props;
-      let resp = await authStore.login();
+      const { login, navigation } = this.props;
+      let resp = await login();
 
       if (resp.success) {
         navigation.navigate('Main');
       } else {
         Alert.alert('ERROR - ', resp.errMsg);
       }
-
     }
 
     onClickAutoLogin = () => {
-      const checked = !this.state.checked;
+      const { autoLoginFlag, setAutoLoginFlag } = this.props;
       
-      this.props.authStore.setAutoLoginFlag(checked);
-      this.setState({checked: checked})
+      setAutoLoginFlag(!autoLoginFlag);
     }
 
     render = () => {
-      const { authStore } = this.props;
+      const { id, pwd, setId, setPwd, autoLoginFlag } = this.props;
 
       return (
         <View style={styles.container}>
@@ -72,17 +77,17 @@ class Login extends React.Component {
               </View>
               <TextInput
                 style={styles.input}
-                onChangeText={(id) => authStore.setId(id)}
+                onChangeText={setId}
+                value={id}
                 autoCapitalize = 'none'
-                value={authStore.id}
               />
               <View style={styles.label}>
                 <Text>Password</Text>
               </View>
               <TextInput
                 style={styles.input}
-                onChangeText={(pwd) => authStore.setPwd(pwd)}
-                value={authStore.pwd}
+                onChangeText={setPwd}
+                value={pwd}
                 autoCapitalize = 'none'
                 secureTextEntry={true}
               />
@@ -92,7 +97,7 @@ class Login extends React.Component {
                   title='로그인 상태 유지'
                   checkedIcon='check-square'
                   checkedColor='green'
-                  checked={this.state.checked}
+                  checked={autoLoginFlag}
                   onPress={this.onClickAutoLogin.bind(this)}
                   />
               </View>

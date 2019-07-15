@@ -16,7 +16,13 @@ import { observer, inject } from 'mobx-react';
 
 
 @inject(stores => ({
-    trucksStore: stores.root.trucksStore,
+    /* state */
+    trucks: stores.root.trucksStore.list,
+
+    /* action or computed */
+    fetchTruckList: stores.root.trucksStore.fetchTruckList,
+    seachTruck: stores.root.trucksStore.seachTruck,
+    updateTruck: stores.root.trucksStore.updateTruck
   })
 )
 @observer
@@ -26,46 +32,39 @@ class Main extends React.Component {
       headerLeft: null
     };
   
-    constructor() {
-      super();
-
-      state = {
-        reflesh: false
-      }
+    constructor(props) {
+      super(props);
     }
 
     async componentDidMount() {
-      const store = this.props.trucksStore;
+      const { fetchTruckList } = this.props;
 
-      let resp = await store.fetchTruckList();
-      if (resp.success) {
-        this.setState({'list': resp.data});
-      } else {
+      let resp = await fetchTruckList();
+      if (!resp.success) {
         Alert.alert('ERROR - ', resp.errMsg);
       }
     }
 
     onClickSeachBtn = async (value) => {
-      await this.props.trucksStore.seachTruck(value);
-      this.setState({'list':this.props.trucksStore.list});
+      const { trucks, seachTruck } = this.props;
+
+      await seachTruck(value);
     }
 
     onClickFavorite = async (item) => {
-      const { trucksStore } = this.props;
+      const { updateTruck } = this.props;
 
-      let resp = await trucksStore.updateTruck({
-                                  key:'favorite', 
-                                  vehicleIdx: item.vehicleIdx});
+      let resp = await updateTruck({
+                            key:'favorite', 
+                            vehicleIdx: item.vehicleIdx});
 
-      if (resp.success) {
-          this.setState({'reflesh': !this.reflesh})
-      } else {
+      if (!resp.success) {
           Alert.alert('ERROR - ', resp.errMsg);
       } 
     }
 
     render = () => {
-      const { trucksStore } = this.props;
+      const { trucks } = this.props;
 
       return (
         <View style={styles.container}>
@@ -75,7 +74,7 @@ class Main extends React.Component {
           <View style={styles.content}>
             <FlatList
                   style={{padding: 10}}
-                  data={trucksStore.list}  
+                  data={trucks}  
                   renderItem={({item}) => (
                     <ListItem item={item} onFavorite={this.onClickFavorite.bind(this)}/>
                   )}

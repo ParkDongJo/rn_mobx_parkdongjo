@@ -18,26 +18,7 @@ import { observer, inject } from 'mobx-react';
 class ListItem extends React.Component {
     constructor() {
         super();
-
-        // state = {
-        //     reflesh: false
-        // }
-
-        // this.onClickFavorite = this.onClickFavorite.bind(this);
-        this.renderFavoriteIcon = this.renderFavoriteIcon.bind(this);
     }
-
-    // onClickFavorite = async (item) => {
-    //     let resp = await this.props.trucksStore.updateTruck({
-    //                                 key:'favorite', 
-    //                                 vehicleIdx: item.vehicleIdx});
-
-    //     if (resp.success) {
-    //         this.setState({'reflesh': !this.reflesh})
-    //     } else {
-    //         Alert.alert('ERROR - ', resp.errMsg);
-    //     } 
-    // }
 
     renderFavoriteIcon = (item) => {
         let iconName = item.favorite ? 'ios-star': 'ios-star-outline';

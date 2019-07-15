@@ -81,7 +81,7 @@ export default class TruckListStore {
     }
 
     @action sortTruckList = (list) => {
-      let _list = list.sort((a, b) => {
+      let _list = list.slice().sort((a, b) => {
 
         return b.favorite == true && a.favorite == false ?  1 // b 앞 > a 뒤
               : b.favorite == false && a.favorite == true ? -1 // b 뒤 > a 앞
