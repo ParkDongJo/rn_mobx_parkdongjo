@@ -22,6 +22,8 @@ class Splash extends React.Component {
 
     async componentDidMount() {
         const data = await this.performTimeConsumingTask();
+
+        // this.props.authStore.logout();
     
         if (data !== null) {
             let auth = await AsyncStorage.getItem('auth')
@@ -46,7 +48,6 @@ class Splash extends React.Component {
     excuteAutoLogin = async (auth) => {
         const { authStore, navigation } = this.props;
         
-
         authStore.setId(auth.id);
         authStore.setPwd(auth.pwd);
         

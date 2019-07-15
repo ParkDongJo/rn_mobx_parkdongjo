@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 
   btnView: {
-    flex: 0.6,
+    flex: 0.5,
     borderWidth: 1,
     flexDirection: "column",
     justifyContent: "center",

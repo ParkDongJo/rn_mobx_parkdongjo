@@ -29,7 +29,6 @@ class Login extends React.Component {
 
       this.state = {
         checked: true,
-        isLoading: true
       };
     }
 
