@@ -57,7 +57,12 @@ export default class AuthStore {
             }
             return resp;
         } else {
-            return {sucess: false, errMsg: 'Not vaild your input value'};
+            if (this.auth.id !== '') {
+                return {sucess: false, errMsg: 'Please input your ID'};
+            }
+            if (this.auth.pwd !== '') {
+                return {sucess: false, errMsg: 'Please input your Password'};
+            }
         }
     }
 

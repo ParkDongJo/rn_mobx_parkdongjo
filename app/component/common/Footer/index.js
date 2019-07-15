@@ -13,7 +13,7 @@ class Footer extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.menuBtn} 
                             onPress={()=> {}}>
-              <Icon name="ios-menu" size={30}/>
+              <Icon name="ios-menu" size={30} color='#fff'/>
           </TouchableOpacity>
           
         </View>

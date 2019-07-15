@@ -1,4 +1,7 @@
 module.exports = {
+  COLOR: {
+    PRIMARY: '#00bc45'
+  },
   API_URL: 'https://mcricwiojwfb.cleancitynetworks.com',
   STATUS_CODE: {
     ERROR: 500, // 500

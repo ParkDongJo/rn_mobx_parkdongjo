@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  /* Login View */
   container: {
     flex: 1,
     backgroundColor: '#FFF'
@@ -10,63 +11,80 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF"
   },
 
+  /* Intro View */
   introView: {
-    flex: 1.5,
+    flex: 2.6,
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    alignItems: 'center',
-    borderWidth: 1
+    alignItems: 'center'
+  },
+  introImg: {
+    width: 120, 
+    height: 120, 
+    borderRadius: 4,
+    marginBottom: 21,
+    backgroundColor: 'rgba(0, 0, 0, 0.18)'
   },
 
+  /* Login Input View */
   inputView: {
-    flex: 1,
+    flex: 4,
     flexDirection: 'column',
-    borderWidth: 1,
-    padding: 10
+    marginLeft: 32,
+    marginRight: 32,
   },
   label: {
-    height: 30,
-    marginTop: 2,
-    marginBottom: 2,
-    marginLeft: 10,
-    marginRight: 10,
+    height: 24,
+    paddingBottom: 6,
     flexDirection: 'column',
     justifyContent: "center"
   },
+  labelTxt: {
+    height: 18,
+    color: 'rgba(0, 0, 0, 0.6)',
+  },
   input: {
-    height: 50, 
+    height: 48, 
     padding: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    borderColor: 'gray', 
-    borderWidth: 1
+    borderColor: 'rgba(0, 0, 0, 0.18)', 
+    borderWidth: 1,
+    borderRadius: 4
+  },
+  pwdInput: {
+    marginTop: 16,
   },
   checkView: {
+    marginTop: 17,
     flexDirection: 'row', 
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    height: 36,
   },
 
+  /* Login Button View */
   btnView: {
-    flex: 0.5,
-    borderWidth: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: 10
+    marginTop:61,
   },
   defBtn: {
-    marginTop: 5,
-    marginBottom: 5,
-    borderColor: 'gray', 
-    borderWidth: 1
+    height: 48,
+    flexDirection: "column",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loginBtn: {
- 
+    backgroundColor: "#00bc45",
   },
   findPwdBtn: {
-
+    marginTop: 8,
+    borderColor: 'rgba(0, 0, 0, 0.18)', 
+    borderWidth: 1,
   },
-  title: {
-
+  findPwdTxt: {
+    fontSize: 16,
+    color: "#00bc45"
+  },
+  loginTxt: {    
+    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.87)', 
   },
 });
 

@@ -25,7 +25,7 @@ class SearchView extends React.Component {
           <View style={styles.searchView}>
             <TouchableOpacity style={styles.searchBtn}
                               onPress={() => { this.props.onSearch(this.state.text) }}>
-              <Icon name="ios-search" size={30}/>
+              <Icon name="ios-search" size={20} color="#00bc45"/>
             </TouchableOpacity>
             <TextInput
                   style={styles.input}

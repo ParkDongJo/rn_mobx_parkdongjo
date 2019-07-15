@@ -4,13 +4,15 @@ import {
   Text,
   Button,
   FlatList,
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 import styles from './styles';
 
 import SearchView from '../../common/Search';
 import ListItem from './listItem';
 import Footer from '../../common/Footer';
+import global from './../../../global/constants'
 
 import { observer, inject } from 'mobx-react';
 
@@ -67,23 +69,24 @@ class Main extends React.Component {
       const { trucks } = this.props;
 
       return (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <SearchView onSearch={this.onClickSeachBtn.bind(this)}/>
+        <SafeAreaView style={{flex: 1, backgroundColor: global.COLOR.PRIMARY}}>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <SearchView onSearch={this.onClickSeachBtn.bind(this)}/>
+            </View>
+            <View style={styles.content}>
+              <FlatList
+                    style={{paddingTop: 16}}
+                    data={trucks}  
+                    renderItem={({item}) => (
+                      <ListItem item={item} onFavorite={this.onClickFavorite.bind(this)}/>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />  
+            </View>
+            <Footer />
           </View>
-          <View style={styles.content}>
-            <FlatList
-                  style={{padding: 10}}
-                  data={trucks}  
-                  renderItem={({item}) => (
-                    <ListItem item={item} onFavorite={this.onClickFavorite.bind(this)}/>
-                  )}
-                  keyExtractor={(item, index) => index.toString()}
-              />  
-          </View>
-          <Footer />
-        </View>
-        
+        </SafeAreaView>        
       );
     }
 }

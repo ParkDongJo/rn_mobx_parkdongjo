@@ -11,10 +11,7 @@ import styles from './styles';
 import { observer, inject } from 'mobx-react';
 
 
-@inject(stores => ({
-    trucksStore: stores.root.trucksStore,
-  })
-)
+
 class ListItem extends React.Component {
     constructor() {
         super();
@@ -22,7 +19,7 @@ class ListItem extends React.Component {
 
     renderFavoriteIcon = (item) => {
         let iconName = item.favorite ? 'ios-star': 'ios-star-outline';
-        return <Icon name={iconName} size={20}/>
+        return <Icon name={iconName} size={20} color="#00ac3c"/>
     }
 
     render = () => {

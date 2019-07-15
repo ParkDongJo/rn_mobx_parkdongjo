@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import {
   View,
+  KeyboardAvoidingView,
   Text,
   Button,
   Image,
   TextInput,
   TouchableOpacity,
   Alert,
+  Platform,
   AsyncStorage,
+  SafeAreaView
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import styles from './styles';
@@ -56,7 +59,7 @@ class Login extends React.Component {
 
     onClickAutoLogin = () => {
       const { autoLoginFlag, setAutoLoginFlag } = this.props;
-      
+
       setAutoLoginFlag(!autoLoginFlag);
     }
 
@@ -64,16 +67,19 @@ class Login extends React.Component {
       const { id, pwd, setId, setPwd, autoLoginFlag } = this.props;
 
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={{flex: 1}}>
+        <KeyboardAvoidingView style={styles.container} 
+                          behavior={Platform.OS === "ios" ? "padding" : null} 
+                          keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0} enabled>
           <View style={styles.content}>
 
             <View style={styles.introView}>
-              <Image style={{width: 100, height: 100, backgroundColor: 'gray', marginBottom: 60}} />
+              <Image style={styles.introImg} />
             </View>{/* 인트로 영역 end */}
 
             <View style={styles.inputView}>
               <View style={styles.label}>
-                <Text>ID</Text>
+                <Text style={styles.labelTxt}>ID</Text>
               </View>
               <TextInput
                 style={styles.input}
@@ -81,8 +87,9 @@ class Login extends React.Component {
                 value={id}
                 autoCapitalize = 'none'
               />
-              <View style={styles.label}>
-                <Text>Password</Text>
+              
+              <View style={[styles.label, styles.pwdInput]}>
+                <Text style={styles.labelTxt}>Password</Text>
               </View>
               <TextInput
                 style={styles.input}
@@ -91,37 +98,45 @@ class Login extends React.Component {
                 autoCapitalize = 'none'
                 secureTextEntry={true}
               />
+
               <View style={styles.checkView}>
                 <CheckBox
-                  containerStyle={{backgroundColor: '#FFF', borderWidth: 0, padding:0, marginRight: 0}}
+                  containerStyle={{backgroundColor: '#FFF', 
+                                    borderWidth: 0, 
+                                    padding:0, 
+                                    marginRight: 0,
+                                    marginLeft: 0,
+                                    height: 24}}
                   title='로그인 상태 유지'
+                  size={20}
+                  textStyle={{fontWeight: "400", 
+                              color: 'rgba(0, 0, 0, 0.6)',
+                              fontSize: 13.6,
+                              lineHeight: 16,
+                              letterSpacing: 1.25}}
                   checkedIcon='check-square'
                   checkedColor='green'
                   checked={autoLoginFlag}
                   onPress={this.onClickAutoLogin.bind(this)}
                   />
               </View>
+
+              <View style={styles.btnView}>
+                            <TouchableOpacity style={[styles.defBtn, styles.loginBtn]}
+                                    onPress={this.onClickLoginBtn.bind(this)}>
+                    <Text style={[styles.btnTxt, styles.loginTxt]}>로그인</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={[styles.defBtn, styles.findPwdBtn]}
+                                    onPress={() => {Alert.alert("Sorry, This func not working")}}>
+                    <Text style={styles.findPwdTxt}>비밀번호 찾기</Text>
+                  </TouchableOpacity>
+              </View>{/* 버튼영역 end */}
+
             </View>{/* 입력영역 end */}
+          </View>
 
-            <View style={styles.btnView}>
-              <TouchableOpacity style={[styles.defBtn, styles.loginBtn]}>
-                <Button
-                  onPress={this.onClickLoginBtn.bind(this)}
-                  title="로그인"
-                  color="#841584"
-                />
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.defBtn, styles.findPwdBtn]}>
-                <Button
-                  onPress={() => {Alert.alert("this func not working")}}
-                  title="비밀번호 찾기"
-                  color="#841584"
-                />
-              </TouchableOpacity>
-            </View>
-          </View>{/* 버튼영역 end */}
-
-        </View>
+        </KeyboardAvoidingView>
+        </SafeAreaView>
       )
     }
 }

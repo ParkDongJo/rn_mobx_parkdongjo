@@ -66,7 +66,7 @@ class Splash extends React.Component {
       return (
         <View style={styles.container}>
           <Text style={styles.title}>
-            Splash Screen
+            RN Developer Park.DJ
           </Text>
         </View>
       );

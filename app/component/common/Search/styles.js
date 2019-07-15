@@ -7,26 +7,26 @@ const styles = StyleSheet.create({
     },
     searchView: {
         flex: 1,
+        height: 24,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    inputView: {
-        flex: 9,
-        borderWidth: 1,
-        padding: 10
+        alignItems: 'center',
+        paddingLeft: 10,
+        borderBottomColor: 'rgba(0, 0, 0, 0.18)',
+        borderBottomWidth: 1,
     },
     input: {
         flex: 9,
-        height: 50, 
-        padding: 10,
-        borderColor: 'gray', 
-        borderWidth: 1
+        fontSize: 16,
+        lineHeight: 22,
+        letterSpacing: 0,
+        height: 48, 
+        paddingLeft: 10
     },
     searchBtn: {
-        flex: 1,
-        borderColor: 'gray', 
-        borderWidth: 1,
+        width: 24,
+        height: 24,
+        fontSize: 16,
         flexDirection: 'row',
         justifyContent: 'center'
     }

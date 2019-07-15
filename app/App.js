@@ -1,5 +1,9 @@
 import React from "react";
-import { StatusBar, SafeAreaView, } from "react-native";
+import { 
+  StatusBar, 
+  SafeAreaView, 
+  View
+} from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import { Provider } from 'mobx-react';
 
@@ -24,15 +28,18 @@ const rootStore = new RootStore();
 
 export default class App extends React.Component {
   render() {
-
     return (
-      <Provider root={rootStore}>
-        <SafeAreaView style={{flex: 1}}>
-          <StatusBar barStyle="dark-content" translucent = {true} />
+      <View style={{flex: 1}}>
+        <SafeAreaView style={{flex: 0, backgroundColor: '#f5f5f5'}} />
+        <Provider root={rootStore}>
 
-          <AppContainer />
-        </SafeAreaView>
-      </Provider>
+          <View style={{flex: 1}}>
+            <StatusBar barStyle='dark-content' translucent={false} />
+
+            <AppContainer />
+          </View>
+        </Provider>
+      </View>
     )
   }
 }
