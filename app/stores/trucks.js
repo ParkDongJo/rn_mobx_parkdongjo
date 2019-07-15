@@ -23,7 +23,7 @@ export default class TruckListStore {
       let resp = await callApiByGet({token: token, path: '/mobile/v1/users/self/vehicles/'})
 
       if (resp.success) {
-        this.setList(resp.data);
+        this.setList(this.sortTruckList(resp.data));
       }
       return resp;
     }
@@ -31,11 +31,11 @@ export default class TruckListStore {
     @action seachTruck = async (value) => {
       const result = this.list.find((row) => row.licenseNumber === value);
 
-      //데이터가 있을 시
+      //찾는 데이터가 있을 시
       if (!!result) {
         this.setList([result]);
 
-      //데이터가 없을 시
+      //찾는 데이터가 없을 시
       } else {
         if (value == '') {
           await this.fetchTruckList();
@@ -74,8 +74,21 @@ export default class TruckListStore {
 
       if (resp.success) {
         result[key] = value;
+        this.setList(this.sortTruckList(this.list));
       }
 
       return resp;
     }
+
+    @action sortTruckList = (list) => {
+      let _list = list.sort((a, b) => {
+
+        return b.favorite == true && a.favorite == false ?  1 // b 앞 > a 뒤
+              : b.favorite == false && a.favorite == true ? -1 // b 뒤 > a 앞
+              : 0;
+      })
+
+      return _list;
+    }
+
 }

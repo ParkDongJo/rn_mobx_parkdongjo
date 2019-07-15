@@ -19,25 +19,25 @@ class ListItem extends React.Component {
     constructor() {
         super();
 
-        state = {
-            reflesh: false
-        }
+        // state = {
+        //     reflesh: false
+        // }
 
-        this.onClickFavorite = this.onClickFavorite.bind(this);
+        // this.onClickFavorite = this.onClickFavorite.bind(this);
         this.renderFavoriteIcon = this.renderFavoriteIcon.bind(this);
     }
 
-    onClickFavorite = async (item) => {
-        let resp = await this.props.trucksStore.updateTruck({
-                                    key:'favorite', 
-                                    vehicleIdx: item.vehicleIdx});
+    // onClickFavorite = async (item) => {
+    //     let resp = await this.props.trucksStore.updateTruck({
+    //                                 key:'favorite', 
+    //                                 vehicleIdx: item.vehicleIdx});
 
-        if (resp.success) {
-            this.setState({'reflesh': !this.reflesh})
-        } else {
-            Alert.alert('ERROR - ', resp.errMsg);
-        } 
-    }
+    //     if (resp.success) {
+    //         this.setState({'reflesh': !this.reflesh})
+    //     } else {
+    //         Alert.alert('ERROR - ', resp.errMsg);
+    //     } 
+    // }
 
     renderFavoriteIcon = (item) => {
         let iconName = item.favorite ? 'ios-star': 'ios-star-outline';
@@ -53,7 +53,7 @@ class ListItem extends React.Component {
                 <Text style={styles.licenseNumTxt}>{item.licenseNumber}</Text>
                 <View style={styles.capacityView}>
                     <TouchableOpacity style={styles.favoriteBtn} 
-                                        onPress={() => { this.onClickFavorite(item) }}>
+                                        onPress={() => { this.props.onFavorite(item) }}>
 
                         { this.renderFavoriteIcon(item)}
 

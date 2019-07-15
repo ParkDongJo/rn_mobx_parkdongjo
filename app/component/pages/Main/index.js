@@ -22,13 +22,16 @@ import { observer, inject } from 'mobx-react';
 @observer
 class Main extends React.Component {
     static navigationOptions = {
-      title: 'Main Page',
       header: null,
       headerLeft: null
     };
   
     constructor() {
       super();
+
+      state = {
+        reflesh: false
+      }
     }
 
     async componentDidMount() {
@@ -47,6 +50,20 @@ class Main extends React.Component {
       this.setState({'list':this.props.trucksStore.list});
     }
 
+    onClickFavorite = async (item) => {
+      const { trucksStore } = this.props;
+
+      let resp = await trucksStore.updateTruck({
+                                  key:'favorite', 
+                                  vehicleIdx: item.vehicleIdx});
+
+      if (resp.success) {
+          this.setState({'reflesh': !this.reflesh})
+      } else {
+          Alert.alert('ERROR - ', resp.errMsg);
+      } 
+    }
+
     render = () => {
       const { trucksStore } = this.props;
 
@@ -60,7 +77,7 @@ class Main extends React.Component {
                   style={{padding: 10}}
                   data={trucksStore.list}  
                   renderItem={({item}) => (
-                    <ListItem item={item}/>
+                    <ListItem item={item} onFavorite={this.onClickFavorite.bind(this)}/>
                   )}
                   keyExtractor={(item, index) => index.toString()}
               />  
